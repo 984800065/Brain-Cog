@@ -2,6 +2,7 @@
 
 import argparse
 import time
+import json
 
 import timm.models
 import yaml
@@ -127,7 +128,7 @@ parser.add_argument('--recovery-interval', type=int, default=0, metavar='N',
 parser.add_argument('-j', '--workers', type=int, default=4, metavar='N',
                     help='how many training processes to use (default: 1)')
 parser.add_argument('--device', type=int, default=0)
-parser.add_argument('--output', default='/home/hanbing/brain/bp2/', type=str, metavar='PATH',
+parser.add_argument('--output', default='', type=str, metavar='PATH',
                     help='path to output folder (default: none, current dir)')
 parser.add_argument('--eval-metric', default='top1', type=str, metavar='EVAL_METRIC',
                     help='Best metric (default: "top1"')
@@ -221,8 +222,14 @@ def get_dataset(name, type='train', download=True, capacity=None, permutation=No
     dataset_transform = transforms.Compose(transforms_list)
 
     # load data-set
-    dataset = dataset_class('{dir}/{name}'.format(dir=dir, name=data_name), train=False if type=='test' else True,
-                            download=download, transform=dataset_transform, target_transform=target_transform)
+    # TinyImageNet uses 'split' parameter instead of 'train' parameter
+    if data_name == 'TinyImageNet':
+        split = 'val' if type == 'test' else 'train'
+        dataset = dataset_class('{dir}/{name}'.format(dir=dir, name=data_name), split=split,
+                                download=download, transform=dataset_transform, target_transform=target_transform)
+    else:
+        dataset = dataset_class('{dir}/{name}'.format(dir=dir, name=data_name), train=False if type=='test' else True,
+                                download=download, transform=dataset_transform, target_transform=target_transform)
 
     # print information about dataset on the screen
     if verbose:
@@ -320,9 +327,37 @@ def main():
 
     _logger.info('Scheduled epochs: {}'.format(num_epochs))
     batch_size=args.batch_size
-    data_dir = '/data0/datasets/'
-    trainset = get_dataset('CIFAR100', type="train", dir=data_dir)
-    testset = get_dataset('CIFAR100', type="test", dir=data_dir)
+    data_dir = '~/data0/datasets/'
+    # Convert dataset name to proper format (e.g., 'tinyimagenet' -> 'TinyImageNet', 'cifar100' -> 'CIFAR100')
+    dataset_name_map = {
+        'cifar100': 'CIFAR100',
+        'cifar10': 'CIFAR10',
+        'mnist': 'MNIST',
+        'tinyimagenet': 'TinyImageNet',
+    }
+    dataset_name = dataset_name_map.get(args.dataset.lower(), args.dataset)
+    # Fallback: try to capitalize if not in map (e.g., 'CIFAR100' -> 'CIFAR100')
+    if dataset_name not in AVAILABLE_DATASETS:
+        # Try different capitalization
+        for key in AVAILABLE_DATASETS.keys():
+            if key.lower() == args.dataset.lower():
+                dataset_name = key
+                break
+    
+    # Check if using TinyImageNet with task_num != 40
+    if dataset_name == 'TinyImageNet' and args.task_num != 40:
+        print("\n" + "="*70)
+        print("WARNING: You are using TinyImageNet dataset (200 classes)")
+        print(f"Current task_num is {args.task_num}, recommended is 40")
+        print(f"Each task will have {int(200/args.task_num)} classes")
+        print("For TinyImageNet, it's recommended to use --task_num 40 (5 classes per task)")
+        print("="*70)
+        print("\nPress ENTER to continue with current settings, or Ctrl+C to exit...")
+        input()
+        print("Continuing with task_num = {}...\n".format(args.task_num))
+    
+    trainset = get_dataset(dataset_name, type="train", dir=data_dir)
+    testset = get_dataset(dataset_name, type="test", dir=data_dir)
     out_num=int(args.num_classes/args.task_num)
     labels_per_dataset_train = [list(np.array(range(out_num))+out_num*context_id) for context_id in range(args.task_num)]
     labels_per_dataset_test = [list(np.array(range(out_num))+out_num*context_id) for context_id in range(args.task_num)]
@@ -372,6 +407,7 @@ def main():
     try:  # train the model
         task_count=0
         regularization_terms= {}
+        avg_acc_list = [0] * len(train_datasets)
         for task in range(len(train_datasets)):
             print("Task:",task)
             if task==0:
@@ -403,14 +439,29 @@ def main():
                     model = m.model
 
                 ta_his=[i for i in range(task+1)]
+                cur_epoch_last_acc_list = []
                 for t in ta_his:
                     loader_his=iter(test_data[t])
-                    validate(t, model, loader_his, validate_loss_fn, args,mat)
+                    metrics = validate(t, model, loader_his, validate_loss_fn, args,mat)
+                    cur_epoch_last_acc_list.append(metrics["top1"])
 
+                avg_acc_list[task] = sum(cur_epoch_last_acc_list) / len(cur_epoch_last_acc_list)
+                last_acc_list = cur_epoch_last_acc_list
                 cc=m.if_zero()
                 _logger.info('*** epoch: {0}, task: {1}, pruning: {2}'.format(epoch,task, cc))
+            
+            _logger.info(f"task: {task}, avg acc: {avg_acc_list[task]}")
             p_index=m.record()
-                    
+        
+        _logger.info(f"Finished training all tasks")
+        result_dict = {
+            "avg_acc": avg_acc_list,
+            "avg_acc_mean": sum(avg_acc_list) / len(avg_acc_list),
+            "last_acc": last_acc_list,
+            "last_acc_mean": sum(last_acc_list) / len(last_acc_list),
+        }
+        _logger.info(json.dumps(result_dict, indent=4))
+
         
     except KeyboardInterrupt:
         pass
@@ -559,9 +610,9 @@ def validate(task, model, loader, loss_fn, args, mat,log_suffix='', visualize=Fa
                 log_name, batch_idx, last_idx, batch_time=batch_time_m,
                 loss=losses_m, top1=top1_m, top5=top5_m))
 
-    # metrics = OrderedDict([('loss', losses_m.avg), ('top1', top1_m.avg), ('top5', top5_m.avg)])
+    metrics = OrderedDict([('loss', losses_m.avg), ('top1', top1_m.avg), ('top5', top5_m.avg)])
 
-    # return metrics
+    return metrics
     
 if __name__ == '__main__':
     main()
