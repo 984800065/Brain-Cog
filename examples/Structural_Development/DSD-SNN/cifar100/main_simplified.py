@@ -327,7 +327,7 @@ def main():
 
     _logger.info('Scheduled epochs: {}'.format(num_epochs))
     batch_size=args.batch_size
-    data_dir = '~/data0/datasets/'
+    data_dir = '/home/dkr/data0/datasets/'
     # Convert dataset name to proper format (e.g., 'tinyimagenet' -> 'TinyImageNet', 'cifar100' -> 'CIFAR100')
     dataset_name_map = {
         'cifar100': 'CIFAR100',
