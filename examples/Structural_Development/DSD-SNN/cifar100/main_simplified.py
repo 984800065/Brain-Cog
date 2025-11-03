@@ -402,7 +402,7 @@ def main():
     loader_his=[]
     task_ready={}
     for index, item in enumerate(model.parameters()):
-        if len(item.size()) > 1 and index<=40:
+        if len(item.size()) > 1 and index<=50:
             task_ready[index]=torch.zeros(item.size(),device=device)
     try:  # train the model
         task_count=0
@@ -519,8 +519,8 @@ def train_epoch(
         #         item.grad=item.grad*gradmask
         optimizer.step()
         for index, item in enumerate(model.parameters()):
-            if len(item.size()) > 1 and index<=40:
-                if index<40:
+            if len(item.size()) > 1 and index<=50:
+                if index<50:
                     ready=task_ready[index].view(task_ready[index].size()[0],-1)
                     ready=torch.sum(ready,dim=1)
                 else:

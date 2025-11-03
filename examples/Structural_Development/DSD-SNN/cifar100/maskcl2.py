@@ -42,29 +42,38 @@ class Mask:
         self.taskww={}
 
     def init_length(self):
+        self.last_conv_layer_index = -1
+        self.first_fc_layer_index = -1
         for index, item in enumerate(self.model.parameters()):
             if len(item.size()) > 1:
                 print(index,item.size())
                 self.mat[index]=torch.ones(item.size(),device=device)
+                if len(item.size()) != 4 and self.last_conv_layer_index == -1:
+                    self.last_conv_layer_index = index
+                elif len(item.size()) != 4 and self.last_conv_layer_index != -1 and self.first_fc_layer_index == -1:
+                    self.first_fc_layer_index = index
+
+        print(self.mat.keys())
+        print(f"last_conv_layer_index: {self.last_conv_layer_index}, first_fc_layer_index: {self.first_fc_layer_index}")
         for index, item in enumerate(self.model.parameters()):
             if len(item.size()) > 1:
-                if index<=40:
+                if index<=self.last_conv_layer_index:
                     self.p_index[index]=torch.tensor([])
                     self.task_ready[index]=torch.zeros(item.size(),device=device)
                     self.reduce[index] = 5*torch.ones(item.size()[0],device=device)
                     if len(item.size()) == 4:
                         self.p_num[index]=torch.zeros(item.size()[0],device=device)
                         self.mat[index][int(self.init_rate*item.size()[0]):]=0.0
-                        if index+5<40:
+                        if index+5<self.last_conv_layer_index:
                             self.mat[index+5][:,int(self.init_rate*item.size()[0]):]=0.0
-                        if index+5==40:
+                        if index+5==self.last_conv_layer_index:
                             self.mat[index+5][:,int(self.init_rate*item.size()[0])*16:]=0.0
                     if len(item.size()) == 2:
                         self.p_num[index]=torch.zeros(item.size()[0]*item.size()[1],device=device)
                         self.mat[index][int(self.init_rate*item.size()[0]):]=0.0
-                if index>40:
+                if index>self.last_conv_layer_index:
                     self.mat[index]=torch.ones(item.size(),device=device)
-                    if index==44:
+                    if index==self.first_fc_layer_index:
                         self.mat[index]=torch.zeros(item.size(),device=device)
                         self.mat[index][:,:int(self.init_rate*item.size()[1])]=1.0
         return self.mat
@@ -94,9 +103,9 @@ class Mask:
             print(self.reduce[index].mean(),self.reduce[index].max(),self.reduce[index].min(),len(p_ind))
             for x in range(0, len(p_ind)):
                 self.mat[index][p_ind[x]] = 0
-                if index+5<40:
+                if index+5<self.last_conv_layer_index:
                     self.mat[index+5][:,p_ind[x]]=0
-                if index+5==40:
+                if index+5==self.last_conv_layer_index:
                     self.mat[index+5][:,p_ind[x]*16:(p_ind[x]+1)*16]=0
             self.mat[index]=torch.sign(self.mat[index]+ self.task_ready[index])
 
@@ -115,7 +124,7 @@ class Mask:
             self.reduce[index]=self.reduce[index]*0.999+self.n_delta[index]*math.exp(-int((epoch-1)/13))
             p_ind = torch.nonzero(self.reduce[index] <0)
             print(self.reduce[index].mean(),self.reduce[index].max(),self.reduce[index].min(),len(p_ind))
-            index_ta=44+task*2
+            index_ta=self.first_fc_layer_index+task*2
             for x in range(0, len(p_ind)):
                 self.mat[index][p_ind[x]] = 0
                 self.mat[index_ta][:,p_ind[x]]=0
@@ -127,22 +136,22 @@ class Mask:
 
     def init_mask(self,task,epoch):
         for index, item in enumerate(self.model.parameters()):
-            if len(item.size()) > 1 and index<=40:
+            if len(item.size()) > 1 and index<=self.last_conv_layer_index:
                 self.get_filter_codebook(index,abs(item.data),task,epoch)
 
     def do_mask(self,task):
         for index, item in enumerate(self.model.parameters()):
-            if len(item.size()) > 1 and index<=40:
+            if len(item.size()) > 1 and index<=self.last_conv_layer_index:
                 ww=item.data
                 item.data=ww*self.mat[index].cuda()
         return self.mat
 
     def init_grow(self,task):
         self.taskmask[task]={}
-        index_ta=44+task*2
+        index_ta=self.first_fc_layer_index+task*2
         self.mat[index_ta]=torch.zeros(self.mat[index_ta].size(),device=device)
         for index, item in enumerate(self.model.parameters()):
-            if len(item.size()) > 1 and index<=40:
+            if len(item.size()) > 1 and index<=self.last_conv_layer_index:
                 self.task_ready[index]=self.task_ready[index]+self.mat[index]
                 self.taskmask[task][index]=self.mat[index]
                 self.taskww[index]=item.data.clone()
@@ -154,15 +163,15 @@ class Mask:
                 ind_grow=ind_empty[:int(item.size()[0]*self.grow_rate)]
                 ind_grow=torch.tensor(ind_grow)
                 ww_g=torch.empty(item.size(),device=device)
-                if index<40:
+                if index<self.last_conv_layer_index:
                     torch.nn.init.kaiming_uniform_(ww_g, a=math.sqrt(5))
-                if index==40:
+                if index==self.last_conv_layer_index:
                     kk=1/math.sqrt(item.size()[1])
                     torch.nn.init.uniform_(ww_g,a=-kk,b=kk)
                 for x in range(0, len(ind_grow)):
                     self.mat[index][ind_grow[x]] = 1.0
                     item.data[ind_grow[x]]=ww_g[ind_grow[x]]
-                    if index==40:
+                    if index==self.last_conv_layer_index:
                         self.mat[index_ta][:,ind_grow[x]]=1.0
                 self.mat[index]=torch.sign(self.mat[index]+self.task_ready[index])
                 self.p_num[index]=torch.zeros(item.size()[0],device=device)
@@ -173,14 +182,14 @@ class Mask:
         # for x in range(0, len(use_nn)):
         #     self.mat[index_ta][:,use_nn[x]] = 1.0
         for index, item in enumerate(self.model.parameters()):
-            if len(item.size()) > 1 and index<40:
+            if len(item.size()) > 1 and index<self.last_conv_layer_index:
                 nsum=self.mat[index].view(item.size()[0],-1)
                 nn=torch.sum(abs(nsum),dim=1)
                 empy_nn=torch.nonzero(nn<0.00001)
                 for x in range(0, len(empy_nn)):
-                    if index+5<40:
+                    if index+5<self.last_conv_layer_index:
                         self.mat[index+5][:,empy_nn[x]]=0
-                    if index+5==40:
+                    if index+5==self.last_conv_layer_index:
                         self.mat[index+5][:,empy_nn[x]*16:(empy_nn[x]+1)*16]=0
 
         return self.mat,self.task_ready,self.taskmask,self.taskww
@@ -188,11 +197,11 @@ class Mask:
     def if_zero(self):
         cc=[]
         for index, item in enumerate(self.model.parameters()):
-            if len(item.size()) > 1 and index<=40:
+            if len(item.size()) > 1 and index<=self.last_conv_layer_index:
                 b = item.data.view(-1).cpu().numpy()
                 print("number of weight is %d, zero is %.3f" %(len(b),100*(len(b)- np.count_nonzero(b))/len(b)))
                 cc.append(100*(len(b)- np.count_nonzero(b))/len(b))
-                if index==40:
+                if index==self.last_conv_layer_index:
                     nouse=torch.sum(self.mat[index],dim=1)
                     no=torch.nonzero(nouse<0.1)
                     print(len(no))
@@ -201,7 +210,7 @@ class Mask:
 
     def record(self):
         for index, item in enumerate(self.model.parameters()):
-            if len(item.size()) > 1 and index<=40:
+            if len(item.size()) > 1 and index<=self.last_conv_layer_index:
                 nsum=self.mat[index].view(item.size()[0],-1)
                 nn=torch.sum(abs(nsum),dim=1)
                 epoch_select=torch.nonzero(nn>0.00001)

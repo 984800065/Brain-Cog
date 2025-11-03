@@ -39,7 +39,9 @@ num_classes: 200
 opt: adamw
 opt_betas: null
 opt_eps: 1.0e-08
-output: ./outputclear
+output: './outputtry
+
+  '
 patience_epochs: 10
 power: 1
 rand_aug: false

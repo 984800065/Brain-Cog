@@ -48,6 +48,10 @@ class TinyImageNet(VisionDataset):
         _, class_to_idx = find_classes(os.path.join(self.dataset_path, 'wnids.txt'))
 
         self.data = make_dataset(self.root, self.base_folder, self.split, class_to_idx)
+        self.img_path_list, self.target_list = zip(*self.data)
+        self.data_seperated_by_target = [[] for _ in range(len(set(self.target_list)) + 1)]
+        for index, data_item in enumerate(self.data):
+            self.data_seperated_by_target[data_item[1]].append(index)
 
     def _download(self):
         print('Downloading...')
