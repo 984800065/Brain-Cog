@@ -59,5 +59,5 @@ DATASET_CONFIGS = {
     'MNIST32': {'size': 32, 'channels': 1, 'classes': 10},
     'CIFAR10': {'size': 32, 'channels': 3, 'classes': 10},
     'CIFAR100': {'size': 32,'size': 64, 'channels': 3, 'classes': 100},
-    'TinyImageNet': { 'channels': 3, 'classes': 200},
+    'TinyImageNet': {'size': 64, 'channels': 3, 'classes': 200},
 }
