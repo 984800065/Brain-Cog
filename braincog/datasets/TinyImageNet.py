@@ -7,6 +7,8 @@ from torchvision.datasets import VisionDataset
 from torchvision.datasets.folder import default_loader
 from torchvision.datasets.folder import default_loader
 from torchvision.datasets.utils import extract_archive, check_integrity, download_url, verify_str_arg
+import torch
+from typing import Tuple
 
 
 class TinyImageNet(VisionDataset):
@@ -62,7 +64,7 @@ class TinyImageNet(VisionDataset):
     def _check_integrity(self):
         return check_integrity(os.path.join(self.root, self.filename), self.md5)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index) -> Tuple[torch.Tensor, int]:
         img_path, target = self.data[index]
         image = self.loader(img_path)
 
