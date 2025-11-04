@@ -65,7 +65,7 @@ parser.add_argument('--task_num', type=int, default=10, metavar='N',
                     help='number of label classes (default: 10)')
 
 # Dataloader parameters
-parser.add_argument('-b', '--batch-size', type=int, default=50, metavar='N',
+parser.add_argument('-b', '--batch-size', type=int, default=16, metavar='N',
                     help='inputs batch size for training (default: 128)')
 
 # Optimizer parameters
