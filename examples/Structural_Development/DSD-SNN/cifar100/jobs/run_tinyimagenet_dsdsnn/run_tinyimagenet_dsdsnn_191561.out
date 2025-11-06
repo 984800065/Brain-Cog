@@ -1,0 +1,508 @@
+Thu Nov  6 09:36:01 CST 2025
+加载用户环境...
+加载conda环境...
+激活conda环境...
+当前Python路径:
+/public/home/groundhogee/.conda/envs/brain-cog/bin/python
+Python 3.9.25
+进入代码目录完成
+GPU状态：
+Thu Nov  6 09:36:02 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.54.14              Driver Version: 550.54.14      CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A800-SXM4-80GB          On  |   00000000:42:00.0 Off |                    0 |
+| N/A   47C    P0             65W /  500W |       0MiB /  81920MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+开始运行训练脚本...
+[32m2025-11-06 09:36:11.587[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m352[0m | [1mScheduled epochs: 610[0m
+[32m2025-11-06 09:36:14.282[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m441[0m | [1m=== Starting Task 0 ===[0m
+./output_tinyimagenet/train/20251106-093609-SNN-tinyimagenet-0-gwu-xin-epochs
+SNN(
+  (encoder): Encoder()
+  (feature): Sequential(
+    (0): BaseConvModule(
+      (conv): Conv2d(3, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (1): BaseConvModule(
+      (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (2): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    (3): BaseConvModule(
+      (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (4): BaseConvModule(
+      (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (5): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    (6): BaseConvModule(
+      (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (7): BaseConvModule(
+      (conv): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (8): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    (9): BaseConvModule(
+      (conv): Conv2d(512, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (10): BaseConvModule(
+      (conv): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (11): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    (12): BaseConvModule(
+      (conv): Conv2d(1024, 2048, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+    (13): BaseConvModule(
+      (conv): Conv2d(2048, 2048, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+      (activation): Identity()
+    )
+  )
+  (fc): Sequential(
+    (0): Flatten(start_dim=1, end_dim=-1)
+    (1): BaseLinearModule(
+      (fc): Linear(in_features=32768, out_features=2048, bias=True)
+      (node): LIFNode(
+        (act_fun): QGateGrad()
+      )
+    )
+  )
+  (dec): ModuleDict(
+    (0): Linear(in_features=2048, out_features=5, bias=True)
+    (1): Linear(in_features=2048, out_features=5, bias=True)
+    (2): Linear(in_features=2048, out_features=5, bias=True)
+    (3): Linear(in_features=2048, out_features=5, bias=True)
+    (4): Linear(in_features=2048, out_features=5, bias=True)
+    (5): Linear(in_features=2048, out_features=5, bias=True)
+    (6): Linear(in_features=2048, out_features=5, bias=True)
+    (7): Linear(in_features=2048, out_features=5, bias=True)
+    (8): Linear(in_features=2048, out_features=5, bias=True)
+    (9): Linear(in_features=2048, out_features=5, bias=True)
+    (10): Linear(in_features=2048, out_features=5, bias=True)
+    (11): Linear(in_features=2048, out_features=5, bias=True)
+    (12): Linear(in_features=2048, out_features=5, bias=True)
+    (13): Linear(in_features=2048, out_features=5, bias=True)
+    (14): Linear(in_features=2048, out_features=5, bias=True)
+    (15): Linear(in_features=2048, out_features=5, bias=True)
+    (16): Linear(in_features=2048, out_features=5, bias=True)
+    (17): Linear(in_features=2048, out_features=5, bias=True)
+    (18): Linear(in_features=2048, out_features=5, bias=True)
+    (19): Linear(in_features=2048, out_features=5, bias=True)
+    (20): Linear(in_features=2048, out_features=5, bias=True)
+    (21): Linear(in_features=2048, out_features=5, bias=True)
+    (22): Linear(in_features=2048, out_features=5, bias=True)
+    (23): Linear(in_features=2048, out_features=5, bias=True)
+    (24): Linear(in_features=2048, out_features=5, bias=True)
+    (25): Linear(in_features=2048, out_features=5, bias=True)
+    (26): Linear(in_features=2048, out_features=5, bias=True)
+    (27): Linear(in_features=2048, out_features=5, bias=True)
+    (28): Linear(in_features=2048, out_features=5, bias=True)
+    (29): Linear(in_features=2048, out_features=5, bias=True)
+    (30): Linear(in_features=2048, out_features=5, bias=True)
+    (31): Linear(in_features=2048, out_features=5, bias=True)
+    (32): Linear(in_features=2048, out_features=5, bias=True)
+    (33): Linear(in_features=2048, out_features=5, bias=True)
+    (34): Linear(in_features=2048, out_features=5, bias=True)
+    (35): Linear(in_features=2048, out_features=5, bias=True)
+    (36): Linear(in_features=2048, out_features=5, bias=True)
+    (37): Linear(in_features=2048, out_features=5, bias=True)
+    (38): Linear(in_features=2048, out_features=5, bias=True)
+    (39): Linear(in_features=2048, out_features=5, bias=True)
+  )
+)
+Files already downloaded and verified.
+Files already downloaded and verified.
+Task: 0
+0 torch.Size([512, 3, 3, 3])
+5 torch.Size([512, 512, 3, 3])
+10 torch.Size([512, 512, 3, 3])
+15 torch.Size([512, 512, 3, 3])
+20 torch.Size([512, 512, 3, 3])
+25 torch.Size([512, 512, 3, 3])
+30 torch.Size([1024, 512, 3, 3])
+35 torch.Size([1024, 1024, 3, 3])
+40 torch.Size([2048, 1024, 3, 3])
+45 torch.Size([2048, 2048, 3, 3])
+50 torch.Size([2048, 32768])
+54 torch.Size([5, 2048])
+56 torch.Size([5, 2048])
+58 torch.Size([5, 2048])
+60 torch.Size([5, 2048])
+62 torch.Size([5, 2048])
+64 torch.Size([5, 2048])
+66 torch.Size([5, 2048])
+68 torch.Size([5, 2048])
+70 torch.Size([5, 2048])
+72 torch.Size([5, 2048])
+74 torch.Size([5, 2048])
+76 torch.Size([5, 2048])
+78 torch.Size([5, 2048])
+80 torch.Size([5, 2048])
+82 torch.Size([5, 2048])
+84 torch.Size([5, 2048])
+86 torch.Size([5, 2048])
+88 torch.Size([5, 2048])
+90 torch.Size([5, 2048])
+92 torch.Size([5, 2048])
+94 torch.Size([5, 2048])
+96 torch.Size([5, 2048])
+98 torch.Size([5, 2048])
+100 torch.Size([5, 2048])
+102 torch.Size([5, 2048])
+104 torch.Size([5, 2048])
+106 torch.Size([5, 2048])
+108 torch.Size([5, 2048])
+110 torch.Size([5, 2048])
+112 torch.Size([5, 2048])
+114 torch.Size([5, 2048])
+116 torch.Size([5, 2048])
+118 torch.Size([5, 2048])
+120 torch.Size([5, 2048])
+122 torch.Size([5, 2048])
+124 torch.Size([5, 2048])
+126 torch.Size([5, 2048])
+128 torch.Size([5, 2048])
+130 torch.Size([5, 2048])
+132 torch.Size([5, 2048])
+dict_keys([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132])
+last_conv_layer_index: 50, first_fc_layer_index: 54
+[32m2025-11-06 09:36:24.917[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [   0/156 (  0%)]  Loss:  1.608024 (1.6080)  Acc@1: 25.0000 (25.0000)  Acc@5: 100.0000 (100.0000)Time: 10.354s,    1.55/s  (10.354s,    1.55/s)  Data: 1.025 (1.025)[0m
+[32m2025-11-06 09:36:29.113[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [  25/156 ( 16%)]  Loss:  1.345148 (1.5303)  Acc@1: 37.5000 (29.0865)  Acc@5: 100.0000 (100.0000)Time: 14.550s,    1.10/s  (12.458s,    1.28/s)  Data: 14.383 (11.939)[0m
+[32m2025-11-06 09:36:33.297[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [  50/156 ( 32%)]  Loss:  1.496498 (1.4409)  Acc@1: 50.0000 (36.0294)  Acc@5: 100.0000 (100.0000)Time: 18.734s,    0.85/s  (14.550s,    1.10/s)  Data: 18.567 (14.204)[0m
+[32m2025-11-06 09:36:37.480[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [  75/156 ( 48%)]  Loss:  1.167714 (1.3909)  Acc@1: 37.5000 (40.2961)  Acc@5: 100.0000 (100.0000)Time: 22.918s,    0.70/s  (16.642s,    0.96/s)  Data: 22.750 (16.355)[0m
+[32m2025-11-06 09:36:41.666[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [ 100/156 ( 65%)]  Loss:  1.431375 (1.3617)  Acc@1: 31.2500 (42.5743)  Acc@5: 100.0000 (100.0000)Time: 27.103s,    0.59/s  (18.734s,    0.85/s)  Data: 26.936 (18.476)[0m
+[32m2025-11-06 09:36:45.855[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [ 125/156 ( 81%)]  Loss:  1.184870 (1.3374)  Acc@1: 43.7500 (43.9484)  Acc@5: 100.0000 (100.0000)Time: 31.292s,    0.51/s  (20.827s,    0.77/s)  Data: 31.125 (20.587)[0m
+[32m2025-11-06 09:36:50.038[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [ 150/156 ( 97%)]  Loss:  0.927221 (1.3136)  Acc@1: 68.7500 (45.2815)  Acc@5: 100.0000 (100.0000)Time: 35.476s,    0.45/s  (22.920s,    0.70/s)  Data: 35.308 (22.692)[0m
+[32m2025-11-06 09:36:50.875[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 0 [ 155/156 (100%)]  Loss:  1.220804 (1.3098)  Acc@1: 56.2500 (45.4728)  Acc@5: 100.0000 (100.0000)Time: 36.312s,    0.44/s  (23.339s,    0.69/s)  Data: 36.145 (23.113)[0m
+0
+[32m2025-11-06 09:36:52.555[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.108)  Loss:  1.1007 (1.2469)  Acc@1: 68.7500 (46.6667)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:36:53.149[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 0, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 91.01171493530273, 1434][0m
+[32m2025-11-06 09:36:53.149[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 0, task: 0, avg_acc: [46.666666666666664, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [46.666666666666664][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 91.012
+1434
+[32m2025-11-06 09:36:53.371[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [   0/156 (  0%)]  Loss:  0.946472 (0.9465)  Acc@1: 62.5000 (62.5000)  Acc@5: 100.0000 (100.0000)Time: 0.187s,   85.58/s  (0.187s,   85.58/s)  Data: 0.017 (0.017)[0m
+[32m2025-11-06 09:36:57.553[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [  25/156 ( 16%)]  Loss:  1.275719 (1.1523)  Acc@1: 50.0000 (53.6058)  Acc@5: 100.0000 (100.0000)Time: 4.369s,    3.66/s  (2.278s,    7.02/s)  Data: 4.202 (2.111)[0m
+[32m2025-11-06 09:37:01.734[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [  50/156 ( 32%)]  Loss:  0.969069 (1.1466)  Acc@1: 43.7500 (53.7990)  Acc@5: 100.0000 (100.0000)Time: 8.550s,    1.87/s  (4.369s,    3.66/s)  Data: 8.383 (4.202)[0m
+[32m2025-11-06 09:37:05.917[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [  75/156 ( 48%)]  Loss:  1.375956 (1.1213)  Acc@1: 31.2500 (54.8520)  Acc@5: 100.0000 (100.0000)Time: 12.732s,    1.26/s  (6.460s,    2.48/s)  Data: 12.565 (6.293)[0m
+[32m2025-11-06 09:37:10.098[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [ 100/156 ( 65%)]  Loss:  1.281322 (1.1338)  Acc@1: 37.5000 (53.7748)  Acc@5: 100.0000 (100.0000)Time: 16.913s,    0.95/s  (8.551s,    1.87/s)  Data: 16.746 (8.384)[0m
+[32m2025-11-06 09:37:14.279[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [ 125/156 ( 81%)]  Loss:  1.178273 (1.1248)  Acc@1: 62.5000 (54.5139)  Acc@5: 100.0000 (100.0000)Time: 21.095s,    0.76/s  (10.641s,    1.50/s)  Data: 20.927 (10.474)[0m
+[32m2025-11-06 09:37:18.460[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [ 150/156 ( 97%)]  Loss:  1.159719 (1.1232)  Acc@1: 50.0000 (54.3874)  Acc@5: 100.0000 (100.0000)Time: 25.275s,    0.63/s  (12.732s,    1.26/s)  Data: 25.108 (12.565)[0m
+[32m2025-11-06 09:37:19.296[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 1 [ 155/156 (100%)]  Loss:  1.049111 (1.1238)  Acc@1: 75.0000 (54.4872)  Acc@5: 100.0000 (100.0000)Time: 26.112s,    0.61/s  (13.150s,    1.22/s)  Data: 25.944 (12.983)[0m
+1
+tensor(8.6226, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.4710, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.6666, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.6830, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.6057, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.7998, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.6257, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.5841, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.6243, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(8.7917, device='cuda:0') tensor(9.1950, device='cuda:0') tensor(4.1950, device='cuda:0') 0
+tensor(0.2501, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(7.3852, device='cuda:0') tensor(8.6950, device='cuda:0') tensor(3.6950, device='cuda:0') 0
+[32m2025-11-06 09:37:20.993[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.067)  Loss:  1.3591 (1.3344)  Acc@1: 56.2500 (41.6667)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:37:21.584[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 1, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 91.01171493530273, 1434][0m
+[32m2025-11-06 09:37:21.584[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 1, task: 0, avg_acc: [41.666666666666664, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [41.666666666666664][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 91.012
+1434
+[32m2025-11-06 09:37:21.810[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [   0/156 (  0%)]  Loss:  1.084927 (1.0849)  Acc@1: 37.5000 (37.5000)  Acc@5: 100.0000 (100.0000)Time: 0.189s,   84.68/s  (0.189s,   84.68/s)  Data: 0.019 (0.019)[0m
+[32m2025-11-06 09:37:25.994[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [  25/156 ( 16%)]  Loss:  1.288570 (1.1020)  Acc@1: 43.7500 (58.4135)  Acc@5: 100.0000 (100.0000)Time: 4.373s,    3.66/s  (2.283s,    7.01/s)  Data: 4.206 (2.115)[0m
+[32m2025-11-06 09:37:30.192[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [  50/156 ( 32%)]  Loss:  1.071732 (1.0794)  Acc@1: 50.0000 (58.0882)  Acc@5: 100.0000 (100.0000)Time: 8.571s,    1.87/s  (4.382s,    3.65/s)  Data: 8.404 (4.215)[0m
+[32m2025-11-06 09:37:34.374[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [  75/156 ( 48%)]  Loss:  1.052601 (1.0792)  Acc@1: 62.5000 (56.9901)  Acc@5: 100.0000 (100.0000)Time: 12.753s,    1.25/s  (6.475s,    2.47/s)  Data: 12.586 (6.308)[0m
+[32m2025-11-06 09:37:38.553[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [ 100/156 ( 65%)]  Loss:  0.675448 (1.0754)  Acc@1: 87.5000 (57.1163)  Acc@5: 100.0000 (100.0000)Time: 16.933s,    0.94/s  (8.567s,    1.87/s)  Data: 16.766 (8.400)[0m
+[32m2025-11-06 09:37:42.733[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [ 125/156 ( 81%)]  Loss:  0.974970 (1.0590)  Acc@1: 62.5000 (57.8869)  Acc@5: 100.0000 (100.0000)Time: 21.113s,    0.76/s  (10.658s,    1.50/s)  Data: 20.946 (10.491)[0m
+[32m2025-11-06 09:37:46.912[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [ 150/156 ( 97%)]  Loss:  0.540576 (1.0563)  Acc@1: 87.5000 (57.9470)  Acc@5: 100.0000 (100.0000)Time: 25.292s,    0.63/s  (12.749s,    1.25/s)  Data: 25.125 (12.582)[0m
+[32m2025-11-06 09:37:47.749[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 2 [ 155/156 (100%)]  Loss:  1.117431 (1.0543)  Acc@1: 43.7500 (58.0128)  Acc@5: 100.0000 (100.0000)Time: 26.128s,    0.61/s  (13.167s,    1.22/s)  Data: 25.961 (13.000)[0m
+2
+tensor(12.2421, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3908, device='cuda:0') 0
+tensor(11.9365, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3908, device='cuda:0') 0
+tensor(12.3520, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3948, device='cuda:0') 0
+tensor(12.2798, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.4187, device='cuda:0') 0
+tensor(12.1881, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3908, device='cuda:0') 0
+tensor(12.5972, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3908, device='cuda:0') 0
+tensor(12.1627, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.4022, device='cuda:0') 0
+tensor(12.0584, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.5405, device='cuda:0') 0
+tensor(12.2146, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3908, device='cuda:0') 0
+tensor(12.5115, device='cuda:0') tensor(13.3858, device='cuda:0') tensor(3.3908, device='cuda:0') 0
+tensor(0.2566, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(9.7833, device='cuda:0') tensor(12.3863, device='cuda:0') tensor(2.3913, device='cuda:0') 0
+[32m2025-11-06 09:37:48.822[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.066)  Loss:  1.1185 (1.1789)  Acc@1: 43.7500 (49.1667)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:37:49.409[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 2, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 91.01171493530273, 1434][0m
+[32m2025-11-06 09:37:49.410[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 2, task: 0, avg_acc: [49.166666666666664, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [49.166666666666664][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 91.012
+1434
+[32m2025-11-06 09:37:49.637[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [   0/156 (  0%)]  Loss:  1.330058 (1.3301)  Acc@1: 50.0000 (50.0000)  Acc@5: 100.0000 (100.0000)Time: 0.188s,   84.92/s  (0.188s,   84.92/s)  Data: 0.019 (0.019)[0m
+[32m2025-11-06 09:37:53.820[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [  25/156 ( 16%)]  Loss:  0.863920 (0.9717)  Acc@1: 68.7500 (59.6154)  Acc@5: 100.0000 (100.0000)Time: 4.371s,    3.66/s  (2.280s,    7.02/s)  Data: 4.204 (2.113)[0m
+[32m2025-11-06 09:37:58.004[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [  50/156 ( 32%)]  Loss:  0.683059 (0.9911)  Acc@1: 75.0000 (60.2941)  Acc@5: 100.0000 (100.0000)Time: 8.555s,    1.87/s  (4.372s,    3.66/s)  Data: 8.388 (4.205)[0m
+[32m2025-11-06 09:38:02.184[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [  75/156 ( 48%)]  Loss:  0.737574 (0.9958)  Acc@1: 75.0000 (60.1151)  Acc@5: 100.0000 (100.0000)Time: 12.736s,    1.26/s  (6.463s,    2.48/s)  Data: 12.569 (6.296)[0m
+[32m2025-11-06 09:38:06.365[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [ 100/156 ( 65%)]  Loss:  1.177663 (0.9855)  Acc@1: 43.7500 (60.2104)  Acc@5: 100.0000 (100.0000)Time: 16.916s,    0.95/s  (8.554s,    1.87/s)  Data: 16.749 (8.387)[0m
+[32m2025-11-06 09:38:10.545[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [ 125/156 ( 81%)]  Loss:  0.759373 (0.9931)  Acc@1: 81.2500 (59.9702)  Acc@5: 100.0000 (100.0000)Time: 21.096s,    0.76/s  (10.645s,    1.50/s)  Data: 20.929 (10.478)[0m
+[32m2025-11-06 09:38:14.725[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [ 150/156 ( 97%)]  Loss:  1.155962 (0.9989)  Acc@1: 62.5000 (59.4785)  Acc@5: 100.0000 (100.0000)Time: 25.276s,    0.63/s  (12.735s,    1.26/s)  Data: 25.109 (12.568)[0m
+[32m2025-11-06 09:38:15.562[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 3 [ 155/156 (100%)]  Loss:  1.194721 (0.9985)  Acc@1: 56.2500 (59.4551)  Acc@5: 100.0000 (100.0000)Time: 26.113s,    0.61/s  (13.153s,    1.22/s)  Data: 25.946 (12.986)[0m
+3
+tensor(15.8596, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.5874, device='cuda:0') 0
+tensor(15.4724, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.6055, device='cuda:0') 0
+tensor(15.9345, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.5914, device='cuda:0') 0
+tensor(15.9534, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.6153, device='cuda:0') 0
+tensor(15.7257, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.5984, device='cuda:0') 0
+tensor(16.3640, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.5874, device='cuda:0') 0
+tensor(15.6875, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.6571, device='cuda:0') 0
+tensor(15.5053, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.7971, device='cuda:0') 0
+tensor(15.8401, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.5874, device='cuda:0') 0
+tensor(16.2125, device='cuda:0') tensor(17.5724, device='cuda:0') tensor(2.5874, device='cuda:0') 0
+tensor(0.2576, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(12.1815, device='cuda:0') tensor(16.0739, device='cuda:0') tensor(1.0889, device='cuda:0') 0
+[32m2025-11-06 09:38:16.639[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.066)  Loss:  0.9905 (1.0471)  Acc@1: 68.7500 (61.2500)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:38:17.231[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 3, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 91.01171493530273, 1434][0m
+[32m2025-11-06 09:38:17.231[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 3, task: 0, avg_acc: [61.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [61.25][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 91.012
+1434
+[32m2025-11-06 09:38:17.459[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [   0/156 (  0%)]  Loss:  1.218213 (1.2182)  Acc@1: 56.2500 (56.2500)  Acc@5: 100.0000 (100.0000)Time: 0.190s,   84.10/s  (0.190s,   84.10/s)  Data: 0.020 (0.020)[0m
+[32m2025-11-06 09:38:21.646[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [  25/156 ( 16%)]  Loss:  0.766698 (0.9359)  Acc@1: 62.5000 (61.0577)  Acc@5: 100.0000 (100.0000)Time: 4.378s,    3.66/s  (2.285s,    7.00/s)  Data: 4.210 (2.117)[0m
+[32m2025-11-06 09:38:25.829[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [  50/156 ( 32%)]  Loss:  0.798008 (0.9211)  Acc@1: 81.2500 (62.2549)  Acc@5: 100.0000 (100.0000)Time: 8.560s,    1.87/s  (4.378s,    3.65/s)  Data: 8.393 (4.210)[0m
+[32m2025-11-06 09:38:30.009[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [  75/156 ( 48%)]  Loss:  1.097847 (0.9340)  Acc@1: 50.0000 (61.2664)  Acc@5: 100.0000 (100.0000)Time: 12.740s,    1.26/s  (6.468s,    2.47/s)  Data: 12.573 (6.301)[0m
+[32m2025-11-06 09:38:34.190[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [ 100/156 ( 65%)]  Loss:  0.802078 (0.9333)  Acc@1: 68.7500 (61.3861)  Acc@5: 100.0000 (100.0000)Time: 16.921s,    0.95/s  (8.559s,    1.87/s)  Data: 16.754 (8.392)[0m
+[32m2025-11-06 09:38:38.372[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [ 125/156 ( 81%)]  Loss:  0.945682 (0.9464)  Acc@1: 62.5000 (61.2103)  Acc@5: 100.0000 (100.0000)Time: 21.103s,    0.76/s  (10.650s,    1.50/s)  Data: 20.936 (10.482)[0m
+[32m2025-11-06 09:38:42.552[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [ 150/156 ( 97%)]  Loss:  1.008587 (0.9521)  Acc@1: 75.0000 (61.4238)  Acc@5: 100.0000 (100.0000)Time: 25.283s,    0.63/s  (12.740s,    1.26/s)  Data: 25.116 (12.573)[0m
+[32m2025-11-06 09:38:43.388[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 4 [ 155/156 (100%)]  Loss:  0.562579 (0.9466)  Acc@1: 81.2500 (61.6186)  Acc@5: 100.0000 (100.0000)Time: 26.119s,    0.61/s  (13.158s,    1.22/s)  Data: 25.952 (12.991)[0m
+4
+tensor(19.4749, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.7848, device='cuda:0') 0
+tensor(19.0895, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.8863, device='cuda:0') 0
+tensor(19.4745, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.8860, device='cuda:0') 0
+tensor(19.6272, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.8127, device='cuda:0') 0
+tensor(19.3061, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.8094, device='cuda:0') 0
+tensor(20.0951, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.7848, device='cuda:0') 0
+tensor(19.1991, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.8544, device='cuda:0') 0
+tensor(18.9856, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(2.0159, device='cuda:0') 0
+tensor(19.4542, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.7848, device='cuda:0') 0
+tensor(19.8357, device='cuda:0') tensor(21.7548, device='cuda:0') tensor(1.7848, device='cuda:0') 0
+tensor(0.2703, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(14.6061, device='cuda:0') tensor(19.7578, device='cuda:0') tensor(-0.2122, device='cuda:0') 36
+[32m2025-11-06 09:38:44.465[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.066)  Loss:  1.1217 (1.0419)  Acc@1: 50.0000 (56.6667)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:38:45.052[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 4, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 91.53871536254883, 1470][0m
+[32m2025-11-06 09:38:45.052[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 4, task: 0, avg_acc: [56.666666666666664, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [56.666666666666664][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 91.539
+1470
+[32m2025-11-06 09:38:45.277[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [   0/156 (  0%)]  Loss:  0.651861 (0.6519)  Acc@1: 62.5000 (62.5000)  Acc@5: 100.0000 (100.0000)Time: 0.187s,   85.40/s  (0.187s,   85.40/s)  Data: 0.018 (0.018)[0m
+[32m2025-11-06 09:38:49.454[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [  25/156 ( 16%)]  Loss:  0.849709 (0.9184)  Acc@1: 75.0000 (62.9808)  Acc@5: 100.0000 (100.0000)Time: 4.365s,    3.67/s  (2.277s,    7.03/s)  Data: 4.198 (2.110)[0m
+[32m2025-11-06 09:38:53.634[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [  50/156 ( 32%)]  Loss:  1.110936 (0.9216)  Acc@1: 50.0000 (63.3578)  Acc@5: 100.0000 (100.0000)Time: 8.545s,    1.87/s  (4.366s,    3.67/s)  Data: 8.378 (4.199)[0m
+[32m2025-11-06 09:38:57.812[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [  75/156 ( 48%)]  Loss:  0.992976 (0.9510)  Acc@1: 62.5000 (61.6776)  Acc@5: 100.0000 (100.0000)Time: 12.723s,    1.26/s  (6.455s,    2.48/s)  Data: 12.556 (6.288)[0m
+[32m2025-11-06 09:39:01.990[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [ 100/156 ( 65%)]  Loss:  0.882446 (0.9374)  Acc@1: 75.0000 (62.6238)  Acc@5: 100.0000 (100.0000)Time: 16.901s,    0.95/s  (8.544s,    1.87/s)  Data: 16.734 (8.377)[0m
+[32m2025-11-06 09:39:06.171[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [ 125/156 ( 81%)]  Loss:  1.193361 (0.9321)  Acc@1: 56.2500 (62.6984)  Acc@5: 100.0000 (100.0000)Time: 21.082s,    0.76/s  (10.634s,    1.50/s)  Data: 20.915 (10.467)[0m
+[32m2025-11-06 09:39:10.352[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [ 150/156 ( 97%)]  Loss:  1.269693 (0.9285)  Acc@1: 43.7500 (62.5414)  Acc@5: 100.0000 (100.0000)Time: 25.263s,    0.63/s  (12.724s,    1.26/s)  Data: 25.095 (12.557)[0m
+[32m2025-11-06 09:39:11.187[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 5 [ 155/156 (100%)]  Loss:  0.942651 (0.9310)  Acc@1: 56.2500 (62.2997)  Acc@5: 100.0000 (100.0000)Time: 26.098s,    0.61/s  (13.142s,    1.22/s)  Data: 25.931 (12.975)[0m
+5
+tensor(23.0870, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(0.9830, device='cuda:0') 0
+tensor(22.5948, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.1344, device='cuda:0') 0
+tensor(23.0185, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.0856, device='cuda:0') 0
+tensor(23.2121, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.0109, device='cuda:0') 0
+tensor(22.9586, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.0076, device='cuda:0') 0
+tensor(23.8125, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(0.9830, device='cuda:0') 0
+tensor(22.8146, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.0858, device='cuda:0') 0
+tensor(22.4950, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.2139, device='cuda:0') 0
+tensor(23.0484, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(1.0016, device='cuda:0') 0
+tensor(23.4584, device='cuda:0') tensor(25.9331, device='cuda:0') tensor(0.9830, device='cuda:0') 0
+tensor(0.3022, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(17.1217, device='cuda:0') tensor(23.4381, device='cuda:0') tensor(-1.2973, device='cuda:0') 257
+[32m2025-11-06 09:39:12.275[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.066)  Loss:  1.1163 (1.0305)  Acc@1: 62.5000 (60.4167)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:39:12.861[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 5, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 95.30091285705566, 1727][0m
+[32m2025-11-06 09:39:12.861[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 5, task: 0, avg_acc: [60.416666666666664, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [60.416666666666664][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 95.301
+1727
+[32m2025-11-06 09:39:13.087[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [   0/156 (  0%)]  Loss:  0.958213 (0.9582)  Acc@1: 43.7500 (43.7500)  Acc@5: 100.0000 (100.0000)Time: 0.190s,   84.39/s  (0.190s,   84.39/s)  Data: 0.020 (0.020)[0m
+[32m2025-11-06 09:39:17.265[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [  25/156 ( 16%)]  Loss:  1.004657 (0.9305)  Acc@1: 56.2500 (61.7788)  Acc@5: 100.0000 (100.0000)Time: 4.368s,    3.66/s  (2.279s,    7.02/s)  Data: 4.201 (2.112)[0m
+[32m2025-11-06 09:39:21.442[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [  50/156 ( 32%)]  Loss:  0.757934 (0.8842)  Acc@1: 56.2500 (64.3382)  Acc@5: 100.0000 (100.0000)Time: 8.544s,    1.87/s  (4.368s,    3.66/s)  Data: 8.377 (4.201)[0m
+[32m2025-11-06 09:39:25.619[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [  75/156 ( 48%)]  Loss:  0.790748 (0.8731)  Acc@1: 68.7500 (64.7204)  Acc@5: 100.0000 (100.0000)Time: 12.721s,    1.26/s  (6.456s,    2.48/s)  Data: 12.554 (6.289)[0m
+[32m2025-11-06 09:39:29.796[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [ 100/156 ( 65%)]  Loss:  0.596502 (0.8483)  Acc@1: 81.2500 (65.3465)  Acc@5: 100.0000 (100.0000)Time: 16.898s,    0.95/s  (8.544s,    1.87/s)  Data: 16.731 (8.377)[0m
+[32m2025-11-06 09:39:33.974[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [ 125/156 ( 81%)]  Loss:  1.086134 (0.8559)  Acc@1: 50.0000 (65.4266)  Acc@5: 100.0000 (100.0000)Time: 21.077s,    0.76/s  (10.633s,    1.50/s)  Data: 20.910 (10.466)[0m
+[32m2025-11-06 09:39:38.153[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [ 150/156 ( 97%)]  Loss:  0.881988 (0.8650)  Acc@1: 56.2500 (65.0248)  Acc@5: 100.0000 (100.0000)Time: 25.256s,    0.63/s  (12.722s,    1.26/s)  Data: 25.089 (12.555)[0m
+[32m2025-11-06 09:39:38.989[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 6 [ 155/156 (100%)]  Loss:  0.826471 (0.8638)  Acc@1: 68.7500 (64.9840)  Acc@5: 100.0000 (100.0000)Time: 26.091s,    0.61/s  (13.140s,    1.22/s)  Data: 25.924 (12.973)[0m
+6
+tensor(26.7018, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.1821, device='cuda:0') 0
+tensor(26.1331, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.3444, device='cuda:0') 0
+tensor(26.6278, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.2845, device='cuda:0') 0
+tensor(26.7134, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.2099, device='cuda:0') 0
+tensor(26.6084, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.2477, device='cuda:0') 0
+tensor(27.5089, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.1821, device='cuda:0') 0
+tensor(26.4343, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.3244, device='cuda:0') 0
+tensor(26.0871, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.4428, device='cuda:0') 0
+tensor(26.6207, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.2006, device='cuda:0') 0
+tensor(27.0307, device='cuda:0') tensor(30.1072, device='cuda:0') tensor(0.1821, device='cuda:0') 0
+tensor(0.5282, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(20.2226, device='cuda:0') tensor(27.1147, device='cuda:0') tensor(-1.1673, device='cuda:0') 5
+[32m2025-11-06 09:39:40.066[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.066)  Loss:  1.2498 (1.0733)  Acc@1: 43.7500 (54.5833)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:39:40.651[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 6, task: 0, pruning: [70.1171875, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.07017517089844, 91.0409927368164, 91.01171493530273, 91.01171493530273, 91.01171493530273, 95.37410736083984, 1732][0m
+[32m2025-11-06 09:39:40.651[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 6, task: 0, avg_acc: [54.583333333333336, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [54.583333333333336][0m
+number of weight is 13824, zero is 70.117
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 2359296, zero is 91.070
+number of weight is 4718592, zero is 91.041
+number of weight is 9437184, zero is 91.012
+number of weight is 18874368, zero is 91.012
+number of weight is 37748736, zero is 91.012
+number of weight is 67108864, zero is 95.374
+1732
+[32m2025-11-06 09:39:40.877[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [   0/156 (  0%)]  Loss:  0.976194 (0.9762)  Acc@1: 50.0000 (50.0000)  Acc@5: 100.0000 (100.0000)Time: 0.188s,   84.95/s  (0.188s,   84.95/s)  Data: 0.019 (0.019)[0m
+[32m2025-11-06 09:39:45.057[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [  25/156 ( 16%)]  Loss:  0.938747 (0.8650)  Acc@1: 56.2500 (68.5096)  Acc@5: 100.0000 (100.0000)Time: 4.369s,    3.66/s  (2.280s,    7.02/s)  Data: 4.202 (2.113)[0m
+[32m2025-11-06 09:39:49.236[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [  50/156 ( 32%)]  Loss:  1.009938 (0.8477)  Acc@1: 62.5000 (67.6471)  Acc@5: 100.0000 (100.0000)Time: 8.548s,    1.87/s  (4.369s,    3.66/s)  Data: 8.380 (4.202)[0m
+[32m2025-11-06 09:39:53.418[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [  75/156 ( 48%)]  Loss:  0.688471 (0.8465)  Acc@1: 75.0000 (67.2697)  Acc@5: 100.0000 (100.0000)Time: 12.730s,    1.26/s  (6.459s,    2.48/s)  Data: 12.562 (6.292)[0m
+[32m2025-11-06 09:39:57.600[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [ 100/156 ( 65%)]  Loss:  0.718336 (0.8445)  Acc@1: 87.5000 (67.2030)  Acc@5: 100.0000 (100.0000)Time: 16.912s,    0.95/s  (8.550s,    1.87/s)  Data: 16.745 (8.382)[0m
+[32m2025-11-06 09:40:01.779[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [ 125/156 ( 81%)]  Loss:  0.802317 (0.8466)  Acc@1: 68.7500 (67.1131)  Acc@5: 100.0000 (100.0000)Time: 21.091s,    0.76/s  (10.640s,    1.50/s)  Data: 20.924 (10.473)[0m
+[32m2025-11-06 09:40:05.955[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [ 150/156 ( 97%)]  Loss:  0.709691 (0.8276)  Acc@1: 62.5000 (67.7980)  Acc@5: 100.0000 (100.0000)Time: 25.267s,    0.63/s  (12.730s,    1.26/s)  Data: 25.100 (12.563)[0m
+[32m2025-11-06 09:40:06.790[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 7 [ 155/156 (100%)]  Loss:  0.934537 (0.8268)  Acc@1: 50.0000 (67.8285)  Acc@5: 100.0000 (100.0000)Time: 26.101s,    0.61/s  (13.148s,    1.22/s)  Data: 25.935 (12.980)[0m
+7
+tensor(30.3068, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.6181, device='cuda:0') 2
+tensor(29.6087, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.4033, device='cuda:0') 2
+tensor(30.2285, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.5158, device='cuda:0') 1
+tensor(30.1904, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.5903, device='cuda:0') 1
+tensor(30.2863, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.5269, device='cuda:0') 3
+tensor(31.1539, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.5943, device='cuda:0') 1
+tensor(29.9889, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.4067, device='cuda:0') 2
+tensor(29.6205, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.1508, device='cuda:0') 3
+tensor(30.1723, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.5996, device='cuda:0') 1
+tensor(30.6081, device='cuda:0') tensor(34.2771, device='cuda:0') tensor(-0.6181, device='cuda:0') 1
+tensor(0.4842, device='cuda:0') tensor(0.7000, device='cuda:0') tensor(-1.3000, device='cuda:0')
+tensor(23.2500, device='cuda:0') tensor(30.7875, device='cuda:0') tensor(-1.1487, device='cuda:0') 15
+[32m2025-11-06 09:40:07.864[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m659[0m | [1mTest0: [  14/14]  Time: 0.064 (0.066)  Loss:  1.0927 (0.9252)  Acc@1: 43.7500 (60.8333)  Acc@5: 100.0000 (100.0000)[0m
+[32m2025-11-06 09:40:08.450[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m480[0m | [1m*** epoch: 7, task: 0, pruning: [70.5078125, 91.30210876464844, 91.2445068359375, 91.1865234375, 91.302490234375, 91.302490234375, 91.15753173828125, 91.15753173828125, 91.11404418945312, 91.0409688949585, 95.60086727142334, 1747][0m
+[32m2025-11-06 09:40:08.450[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m482[0m | [1mepoch: 7, task: 0, avg_acc: [60.833333333333336, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], last_acc: [60.833333333333336][0m
+number of weight is 13824, zero is 70.508
+number of weight is 2359296, zero is 91.302
+number of weight is 2359296, zero is 91.245
+number of weight is 2359296, zero is 91.187
+number of weight is 2359296, zero is 91.302
+number of weight is 2359296, zero is 91.302
+number of weight is 4718592, zero is 91.158
+number of weight is 9437184, zero is 91.158
+number of weight is 18874368, zero is 91.114
+number of weight is 37748736, zero is 91.041
+number of weight is 67108864, zero is 95.601
+1747
+[32m2025-11-06 09:40:08.675[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 8 [   0/156 (  0%)]  Loss:  0.668699 (0.6687)  Acc@1: 68.7500 (68.7500)  Acc@5: 100.0000 (100.0000)Time: 0.188s,   85.13/s  (0.188s,   85.13/s)  Data: 0.019 (0.019)[0m
+[32m2025-11-06 09:40:12.854[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 8 [  25/156 ( 16%)]  Loss:  0.454198 (0.7741)  Acc@1: 87.5000 (67.5481)  Acc@5: 100.0000 (100.0000)Time: 4.367s,    3.66/s  (2.278s,    7.03/s)  Data: 4.200 (2.110)[0m
+[32m2025-11-06 09:40:17.033[0m | [1mINFO    [0m | [36mmain_simplified.py[0m:[36m594[0m | [1mTrain: 8 [  50/156 ( 32%)]  Loss:  0.561948 (0.7686)  Acc@1: 62.5000 (68.5049)  Acc@5: 100.0000 (100.0000)Time: 8.545s,    1.87/s  (4.367s,    3.66/s)  Data: 8.378 (4.200)[0m

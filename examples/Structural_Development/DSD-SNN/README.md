@@ -21,7 +21,7 @@ We validate the effectiveness of the DSD-SNN multiple TIL and CIL benchmarks.
 
 ```CUDA_VISIBLE_DEVICES=0 python main_simplified.py```   
 
-```CUDA_VISIBLE_DEVICES=0 python main_simplified.py --dataset "tinyimagenet" --num-classes "200" --task_num "40" --output "./outputtry"```
+```CUDA_VISIBLE_DEVICES=0 python main_simplified.py --dataset "tinyimagenet" --num-classes "200" --task_num "40" --output "./output_tinyimagenet"```
 
 ## Citation ##
 If you find the code and dataset useful in your research, please consider citing:
