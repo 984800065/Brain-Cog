@@ -188,6 +188,8 @@ parser.add_argument('--spike-rate', action='store_true',
 parser.add_argument('--suffix', type=str, default='',
                     help='Add an additional suffix to the save path (default: \'\')')
 
+parser.add_argument("--first-task-classes", type=int, default=None, help="Number of classes for the first task")
+
 
 def _parse_args():
     # Do we have a config file to parse?
@@ -382,9 +384,23 @@ def main():
     
     trainset = get_dataset(dataset_name, type="train", dir=data_dir)
     testset = get_dataset(dataset_name, type="test", dir=data_dir)
-    out_num=int(args.num_classes/args.task_num)
-    labels_per_dataset_train = [list(np.array(range(out_num))+out_num*context_id) for context_id in range(args.task_num)]
-    labels_per_dataset_test = [list(np.array(range(out_num))+out_num*context_id) for context_id in range(args.task_num)]
+    if args.first_task_classes is None:
+        out_num=int(args.num_classes/args.task_num)
+        labels_per_dataset_train = [list(np.array(range(out_num))+out_num*context_id) for context_id in range(args.task_num)]
+        labels_per_dataset_test = [list(np.array(range(out_num))+out_num*context_id) for context_id in range(args.task_num)]
+    else:
+        first_task_classes = args.first_task_classes
+        # 第一个任务的标签
+        labels_per_dataset_train = [list(np.array(range(first_task_classes)))]
+        labels_per_dataset_test = [list(np.array(range(first_task_classes)))]
+        # 计算剩余任务中每个任务的类别数
+        remaining_classes = args.num_classes - first_task_classes
+        remaining_tasks = args.task_num - 1
+        out_num = remaining_classes // remaining_tasks  # 每个剩余任务的类别数
+        # 为剩余任务生成标签，从 first_task_classes 开始偏移
+        labels_per_dataset_train.extend([list(np.array(range(out_num)) + first_task_classes + out_num*context_id) for context_id in range(remaining_tasks)])
+        labels_per_dataset_test.extend([list(np.array(range(out_num)) + first_task_classes + out_num*context_id) for context_id in range(remaining_tasks)])
+        
     train_datasets = []
     for labels in labels_per_dataset_train:
         target_transform = transforms.Lambda(lambda y, x=labels[0]: y-x)
