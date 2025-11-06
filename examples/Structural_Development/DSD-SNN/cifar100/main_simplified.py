@@ -353,7 +353,7 @@ def main():
 
     logger.info('Scheduled epochs: {}'.format(num_epochs))
     batch_size=args.batch_size
-    data_dir = '/home/dkr/data0/datasets/'
+    data_dir = '/public/home/groundhogee/data0/datasets/'
     # Convert dataset name to proper format (e.g., 'tinyimagenet' -> 'TinyImageNet', 'cifar100' -> 'CIFAR100')
     dataset_name_map = {
         'cifar100': 'CIFAR100',
@@ -448,18 +448,23 @@ def main():
         task_count=0
         regularization_terms= {}
         avg_acc_list = [0] * len(train_datasets)
+        task_time_list = []  # 记录每个任务的训练时间
+        total_start_time = time.time()  # 总训练开始时间
+        
         for task in range(len(train_datasets)):
+            task_start_time = time.time()  # 任务开始时间
             print("Task:",task)
+            logger.info(f"=== Starting Task {task} ===")
             if task==0:
                 m.model = model
                 mat=m.init_length()
                 model = m.model
-                epochs=50
+                epochs=60
             else:
                 m.model = model
                 mat,task_ready,taskmaskk,taskww=m.init_grow(task)
                 model = m.model
-                epochs=30
+                epochs=60
             ta_his=[i for i in range(task+1)]
             for epoch in range(epochs):
                 loader_train = iter(train_data[task])
@@ -492,13 +497,39 @@ def main():
             
                 logger.info(f"epoch: {epoch}, task: {task}, avg_acc: {avg_acc_list}, last_acc: {last_acc_list}")
             p_index=m.record()
+            
+            # 计算任务训练时间
+            task_end_time = time.time()
+            task_elapsed_time = task_end_time - task_start_time
+            task_time_list.append(task_elapsed_time)
+            
+            # 格式化时间显示
+            hours = int(task_elapsed_time // 3600)
+            minutes = int((task_elapsed_time % 3600) // 60)
+            seconds = int(task_elapsed_time % 60)
+            time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+            
+            logger.info(f"=== Task {task} completed in {time_str} ({task_elapsed_time:.2f} seconds) ===")
+        
+        # 计算总训练时间
+        total_end_time = time.time()
+        total_elapsed_time = total_end_time - total_start_time
+        total_hours = int(total_elapsed_time // 3600)
+        total_minutes = int((total_elapsed_time % 3600) // 60)
+        total_seconds = int(total_elapsed_time % 60)
+        total_time_str = f"{total_hours:02d}:{total_minutes:02d}:{total_seconds:02d}"
         
         logger.info(f"Finished training all tasks")
+        logger.info(f"=== Total training time: {total_time_str} ({total_elapsed_time:.2f} seconds) ===")
+        
         result_dict = {
             "avg_acc": avg_acc_list,
             "avg_acc_mean": sum(avg_acc_list) / len(avg_acc_list),
             "last_acc": last_acc_list,
             "last_acc_mean": sum(last_acc_list) / len(last_acc_list),
+            "task_time": task_time_list,  # 每个任务的训练时间（秒）
+            "task_time_mean": sum(task_time_list) / len(task_time_list) if task_time_list else 0,  # 平均任务训练时间
+            "total_time": total_elapsed_time,  # 总训练时间（秒）
         }
         logger.info(json.dumps(result_dict, indent=4))
 
