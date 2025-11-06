@@ -7,11 +7,12 @@ import json
 import timm.models
 import yaml
 import os
-import logging
+import sys
 from collections import OrderedDict
 from contextlib import suppress
 from datetime import datetime
 
+from loguru import logger
 from braincog.base.node.node import *
 from braincog.utils import *
 from braincog.base.utils.criterions import *
@@ -36,7 +37,6 @@ from maskcl2 import *
 from thop import profile, clever_format
 from manipulate import SubDataset
 torch.backends.cudnn.benchmark = True
-_logger = logging.getLogger('train')
 from available import AVAILABLE_DATASETS, AVAILABLE_TRANSFORMS, DATASET_CONFIGS
 from torch.utils.data.dataloader import DataLoader
 from torch.utils.data import ConcatDataset
@@ -259,7 +259,31 @@ def main():
     output_dir = get_outdir(output_base, 'train', exp_name)
     print(output_dir)
     args.output_dir = output_dir
-    setup_default_logging(log_path=os.path.join(output_dir, 'log.txt'))
+    
+    # 配置loguru logger
+    log_path = os.path.join(output_dir, 'log.txt')
+    logger.remove()  # 移除默认handler
+    
+    # 控制台输出：彩色，显示文件路径和行号
+    logger.add(
+        sys.stderr,
+        format="<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> | <level>{level: <8}</level> | <cyan>{file}</cyan>:<cyan>{line}</cyan> | <level>{message}</level>",
+        level="INFO",
+        colorize=True,
+        backtrace=True,
+        diagnose=True
+    )
+    # 文件输出：无颜色，显示文件名和行号（包含完整路径信息）
+    logger.add(
+        log_path,
+        format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {name}:{file}:{line} | {message}",
+        level="INFO",
+        rotation="10 MB",
+        retention="7 days",
+        compression="zip",
+        backtrace=True,
+        diagnose=True
+    )
 
     torch.cuda.set_device('cuda:%d' % args.device)
 
@@ -325,7 +349,7 @@ def main():
     if lr_scheduler is not None and start_epoch > 0:
         lr_scheduler.step(start_epoch)
 
-    _logger.info('Scheduled epochs: {}'.format(num_epochs))
+    logger.info('Scheduled epochs: {}'.format(num_epochs))
     batch_size=args.batch_size
     data_dir = '/home/dkr/data0/datasets/'
     # Convert dataset name to proper format (e.g., 'tinyimagenet' -> 'TinyImageNet', 'cifar100' -> 'CIFAR100')
@@ -448,19 +472,19 @@ def main():
                 avg_acc_list[task] = sum(cur_epoch_last_acc_list) / len(cur_epoch_last_acc_list)
                 last_acc_list = cur_epoch_last_acc_list
                 cc=m.if_zero()
-                _logger.info('*** epoch: {0}, task: {1}, pruning: {2}'.format(epoch,task, cc))
+                logger.info('*** epoch: {0}, task: {1}, pruning: {2}'.format(epoch,task, cc))
             
-            _logger.info(f"task: {task}, avg acc: {avg_acc_list[task]}")
+                logger.info(f"epoch: {epoch}, task: {task}, avg_acc: {avg_acc_list}, last_acc: {last_acc_list}")
             p_index=m.record()
         
-        _logger.info(f"Finished training all tasks")
+        logger.info(f"Finished training all tasks")
         result_dict = {
             "avg_acc": avg_acc_list,
             "avg_acc_mean": sum(avg_acc_list) / len(avg_acc_list),
             "last_acc": last_acc_list,
             "last_acc_mean": sum(last_acc_list) / len(last_acc_list),
         }
-        _logger.info(json.dumps(result_dict, indent=4))
+        logger.info(json.dumps(result_dict, indent=4))
 
         
     except KeyboardInterrupt:
@@ -536,7 +560,7 @@ def train_epoch(
             # lrl = [param_group['lr'] for param_group in optimizer.param_groups]
             # lr = sum(lrl) / len(lrl)
 
-            _logger.info(
+            logger.info(
                 'Train: {} [{:>4d}/{} ({:>3.0f}%)]  ' 
                 'Loss: {loss.val:>9.6f} ({loss.avg:>6.4f})  '
                 'Acc@1: {top1.val:>7.4f} ({top1.avg:>7.4f})  '
@@ -601,7 +625,7 @@ def validate(task, model, loader, loss_fn, args, mat,log_suffix='', visualize=Fa
             end = time.time()
 
         log_name = 'Test'+str(task) + log_suffix
-        _logger.info(
+        logger.info(
             '{0}: [{1:>4d}/{2}]  '
             'Time: {batch_time.val:.3f} ({batch_time.avg:.3f})  '
             'Loss: {loss.val:>7.4f} ({loss.avg:>6.4f})  ' 
